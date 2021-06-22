@@ -137,13 +137,28 @@ class QwiicLEDStick(object):
     def set_single_LED_color(self, number, red, green, blue):
         """
             Change the color of a specific LED.
-            Each color must be a value between 0-255.
-            LED indexed starting at 1.
 
+            :param number: the number of LED. Indexing starts at 1.
+            :param red: the red value between 0 and 255
+            :param green: the green value between 0 and 255
+            :param blue: the blue value between 0 and 255
             :return: Returns true if command written successfully, false otherwise
             :rtype: bool
         """
-        # TODO: do I need to do some boundary checking here?
+        # First, check the boundary cases
+        if red > 255:
+            red = 255
+        if red < 0:
+            red = 0
+        if blue > 255:
+            blue = 255
+        if blue < 0:
+            blue = 0
+        if green > 255:
+            green = 255
+        if green < 0:
+            green = 0
+
         data = [number, red, green, blue]
         return self._i2c.writeBlock(self.address, self.COMMAND_WRITE_SINGLE_LED_COLOR, data)
 
@@ -155,10 +170,150 @@ class QwiicLEDStick(object):
         """
             Set the color of all LEDs in the string. Each will be shining the same color.
             The color value must be between 0-255.
-
+            
+            :param red: the red value to set all LEDs to. Between 0 and 255.
+            :param green: the green value to set all LEDs to. Between 0 and 255.
+            :param blue: the blue value to set all the LEDs to. Between 0 and 255.
             :return: Returns true if command is written successfully, false otherwise
             :rtype: bool
         """
+        # First, check the boundary cases
+        if red > 255:
+            red = 255
+        if red < 0:
+            red = 0
+        if blue > 255:
+            blue = 255
+        if blue < 0:
+            blue = 0
+        if green > 255:
+            green = 255
+        if green < 0:
+            green = 0
+
         data = [red, green, blue]
         return self._i2c.writeBlock(self.address, self.COMMAND_WRITE_ALL_LED_COLOR, data)
     
+    # TODO: finish this function!
+    # ------------------------------------------------------------------------------
+    # set_all_LED_unique_color(red_list, blue_list, green_list, length)
+    #
+    # Change the color of all LEDs at once to individual values
+    def set_all_LED_unique_color(self, red_list, blue_list, green_list, length):
+        """
+            Change the color of all LEDs at once to individual values.
+
+            :param red_list: a list of red values for the LEDs. Index 0 of red_list 
+                corresponds to the red value of LED 0.
+            :param blue_list: a list of blue values for the LEDs.
+            :param green_list: a list of green  values for the LEDs.
+            :param length: the length of the LED string.
+            :return: True if commands are written successfully, false otherwise
+            :rtype: bool
+        """
+        # First, check the boundary cases
+        for i in range(0, length):
+            if red_list[i] > 255:
+                red_list[i] = 255
+            if red_list[i] < 0:
+                red_list[i] = 0
+            if blue_list[i] > 255:
+                blue_list[i] = 255
+            if blue_list[i] < 0:
+                blue_list[i] = 0
+            if green_list[i] > 255:
+                green_list[i] = 255
+            if green_list[i] < 0:
+                green_list[i] = 0
+    
+    # -----------------------------------------------------------------------------
+    # set_single_LED_brightness(number, brightness)
+    #
+    # Change the brightness of a specific LED while keeping their current color
+    def set_single_LED_brightness(self, number, brightness):
+        """
+            Change the brightness of a specific LED while keeping their current color.
+            To turn LEDs off but remember their previous color, set brightness to 0.
+
+            :param number: number of LED to change brightness. LEDs indexed starting at 1.
+            :param brightness: value of LED brightness between 0 and 31.
+            :return: true if the command was sent successfully, false otherwise.
+            :rtype: bool
+        """
+        # First, check the boundary cases
+        if brightness > 31:
+            brightness = 31
+        if brightness < 0:
+            brightness = 0
+        
+        data = [number, brightness]
+        return self._i2c.writeBlock(self.address, self.COMMAND_WRITE_SINGLE_LED_BRIGHTNESS, data)
+    
+    # ----------------------------------------------------------------------------
+    # set_all_LED_brightness(brightness)
+    #
+    # Change the brightness of all LEDs while keeping their current color
+    def set_all_LED_brightness(self, brightness):
+        """
+            Change the brightness of all LEDs while keeping their current color.
+            To turn all LEDs off but remember their previous color, set brightness to 0
+
+            :param brightness: value of LED brightness between 0 and 31.
+            :return: true if the command was sent successfully, false otherwise.
+            :rtype: bool
+        """
+        # First, check the boundary cases
+        if brightness > 31:
+            brightness = 31
+        if brightness < 0:
+            brightness = 0
+        
+        return self._i2c.writeByte(self.address, self.COMMAND_WRITE_ALL_LED_BRIGHTNESS, brightness)
+    
+    # ---------------------------------------------------------------------------
+    # led_off()
+    #
+    # Turn all LEDs off by setting color to 0
+    def led_off(self):
+        """ 
+            Turn all LEDs off by setting color to 0
+
+            :return: true if the command was sent successfully, false otherwise.
+            :rtype: bool
+        """
+        return self._i2c.writeByte(self.address, self.COMMAND_WRITE_ALL_LED_OFF, 0)
+    
+    # ---------------------------------------------------------------------------
+    # change_address(new_address)
+    #
+    # Change the I2C address from one address to another
+    def change_address(self, new_address):
+        """
+            Change the I2C address from one address to another.
+
+            :param new_address: the new address to be set to. Must be valid.
+            :return: true if the command was sent successfully, return false if 
+                the new address is invalid
+            :rtype: bool
+        """
+        # First, check if the specified address is valid
+        if new_address < 0x08 or new_address > 0x77:
+            return False
+        
+        return self._i2c.writeByte(self.address, self.COMMAND_CHANGE_ADDRESS, new_address)
+    
+    # --------------------------------------------------------------------------
+    # change_length(new_length)
+    #
+    # Change the length of the LED string
+    def change_length(self, new_length):
+        """
+            Change the length of the LED string
+            
+            :param new_length: the new length of the LED string
+            :return: true if the command was sent successfully, false otherwise.
+            :rtype: bool
+        """
+        # TODO: need to figure out the max length of the LED string
+        return self._i2c.writeByte(self.address, self.COMMAND_CHANGE_LED_LENGTH, new_length)
+        
