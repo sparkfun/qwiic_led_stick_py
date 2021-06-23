@@ -305,7 +305,7 @@ class QwiicLEDStick(object):
     # led_off()
     #
     # Turn all LEDs off by setting color to 0
-    def led_off(self):
+    def LED_off(self):
         """ 
             Turn all LEDs off by setting color to 0
 
