@@ -150,14 +150,15 @@ class QwiicLEDStick(object):
             red = 255
         if red < 0:
             red = 0
-        if blue > 255:
-            blue = 255
-        if blue < 0:
-            blue = 0
         if green > 255:
             green = 255
         if green < 0:
             green = 0
+        if blue > 255:
+            blue = 255
+        if blue < 0:
+            blue = 0
+        
 
         data = [number, red, green, blue]
         return self._i2c.writeBlock(self.address, self.COMMAND_WRITE_SINGLE_LED_COLOR, data)
@@ -182,24 +183,25 @@ class QwiicLEDStick(object):
             red = 255
         if red < 0:
             red = 0
-        if blue > 255:
-            blue = 255
-        if blue < 0:
-            blue = 0
         if green > 255:
             green = 255
         if green < 0:
             green = 0
+        if blue > 255:
+            blue = 255
+        if blue < 0:
+            blue = 0
+        
 
-        data = [red, green, blue]
-        return self._i2c.writeBlock(self.address, self.COMMAND_WRITE_ALL_LED_COLOR, data)
+        data_list = [red, green, blue]
+        return self._i2c.writeBlock(self.address, self.COMMAND_WRITE_ALL_LED_COLOR, data_list)
     
     # TODO: finish this function!
     # ------------------------------------------------------------------------------
     # set_all_LED_unique_color(red_list, blue_list, green_list, length)
     #
     # Change the color of all LEDs at once to individual values
-    def set_all_LED_unique_color(self, red_list, blue_list, green_list, length):
+    def set_all_LED_unique_color(self, red_list, green_list, blue_list, length):
         """
             Change the color of all LEDs at once to individual values.
 
@@ -217,14 +219,43 @@ class QwiicLEDStick(object):
                 red_list[i] = 255
             if red_list[i] < 0:
                 red_list[i] = 0
-            if blue_list[i] > 255:
-                blue_list[i] = 255
-            if blue_list[i] < 0:
-                blue_list[i] = 0
             if green_list[i] > 255:
                 green_list[i] = 255
             if green_list[i] < 0:
                 green_list[i] = 0
+            if blue_list[i] > 255:
+                blue_list[i] = 255
+            if blue_list[i] < 0:
+                blue_list[i] = 0
+
+        # ATtiny has a 16 byte limit on an I2C transmission, so we need to chop up 
+        # our color lists into chunks of 12 values
+        # Use list comprehension to break list into a list of lists of length 12
+        n = 12
+        red_2dim_list = [red_list[i * n:(i + 1) * n] for i in range((len(red_list) + n - 1) // n)]
+        green_2dim_list = [green_list[i * n:(i +1) * n] for i in range((len(green_list) + n - 1) // n)]
+        blue_2dim_list = [blue_list[i * n:(i + 1) * n] for i in range((len(blue_list) + n - 1) // n)]
+        
+        # Send out red values
+        for i in range(0, len(red_2dim_list)):
+            transmission_len = len(red_2dim_list[i])    # Calculate the number of red values to send
+            offset = i * n                              # Calculate LED offset
+            data_list = [transmission_len, offset] + red_2dim_list[i]
+            self._i2c.writeBlock(self.address, self.COMMAND_WRITE_RED_ARRAY, data_list)
+        
+        # Send out green values
+        for i in range(0, len(green_2dim_list)):
+            transmission_len = len(green_2dim_list[i])
+            offset = i * n
+            data_list = [transmission_len, offset] + green_2dim_list[i]
+            self._i2c.writeBlock(self.address, self.COMMAND_WRITE_GREEN_ARRAY, data_list)
+
+        # Send out blue values
+        for i in range(0, len(blue_2dim_list)):
+            transmission_len = len(blue_2dim_list[i])
+            offset = i * n
+            data_list = [transmission_len, offset] + blue_2dim_list[i]
+            self._i2c.writeBlock(self.address, self.COMMAND_WRITE_BLUE_ARRAY, data_list)
     
     # -----------------------------------------------------------------------------
     # set_single_LED_brightness(number, brightness)
