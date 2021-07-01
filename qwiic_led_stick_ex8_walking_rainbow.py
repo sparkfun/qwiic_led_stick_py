@@ -62,12 +62,12 @@ def walking_rainbow(LED_stick, rainbow_length, LED_length, delay):
             # The nth color is between red and yellow
             if n <= math.floor(rainbow_length / 6):
                 red_array[i] = 255
-                green_array[i] = math.floow(6 * 255 / rainbow_length * n)
+                green_array[i] = int(math.floor(6 * 255 / rainbow_length * n))
                 blue_array[i] = 0
             
             # The nth color is between yellow and green
             elif n <= math.floor(rainbow_length / 3):
-                red_array[i] = math.floor(510 - 6 * 255 / rainbow_length * n)
+                red_array[i] = int(math.floor(510 - 6 * 255 / rainbow_length * n))
                 green_array[i] = 255
                 blue_array[i] = 0
             
@@ -75,11 +75,11 @@ def walking_rainbow(LED_stick, rainbow_length, LED_length, delay):
             elif n <= math.floor(rainbow_length / 2):
                 red_array[i] = 0
                 green_array[i] = 255
-                blue_array[i] = math.floor(6 * 255 / rainbow_length * n - 510)
+                blue_array[i] = int(math.floor(6 * 255 / rainbow_length * n - 510))
             
             # The nth color is between blue and magenta
             elif n <= math.floor(5 * rainbow_length / 6):
-                red_array[i] = math.floor(6 * 255 / rainbow_length * n - 1020)
+                red_array[i] = int(math.floor(6 * 255 / rainbow_length * n - 1020))
                 green_array[i] = 0
                 blue_array[i] = 255
             
@@ -87,7 +87,7 @@ def walking_rainbow(LED_stick, rainbow_length, LED_length, delay):
             else:
                 red_array[i] = 255
                 green_array[i] = 0
-                blue_array[i] = math.floor(1530 - (6 *255 / rainbow_length * n))
+                blue_array[i] = int(math.floor(1530 - (6 *255 / rainbow_length * n)))
 
         # Set all the LEDs to the color values accordig to the arrays
         LED_stick.set_all_LED_unique_color(red_array, green_array, blue_array, LED_length)
@@ -105,7 +105,7 @@ def run_example():
     print("\nLED Stick ready!")
 
     while True:
-        walking_rainbow(my_stick, 20, 10, 0.1)
+        walking_rainbow(my_stick, 20, 10, 0.3)
 
 if __name__ == '__main__':
     try:

@@ -39,7 +39,7 @@
 #==================================================================================
 # Example 10
 
-import __future__ import print_function
+from __future__ import print_function
 import qwiic_led_stick
 import time
 import sys
@@ -67,8 +67,8 @@ def run_example():
         print("\nCharacters received and new address is valid!")
         print("\nAttempting to set Qwiic LED Stick address...")
 
-        my_stick.change_address(new_address)
-        print("\nAddress successfully changed!")
+        if my_stick.change_address(new_address) == True:
+            print("\nAddress successfully changed!")
         # Check that the Qwiic LED Stick acknowledges on the new address
         time.sleep(0.02)
         if my_stick.begin() == False:

@@ -67,9 +67,9 @@ def run_example():
         # This will step through each available brightness setting
         # Brightness values can be from 0 - 31
         for i in range(0, 32):
-            my_stick.set_LED_brightness(i)
+            my_stick.set_all_LED_brightness(i)
 
-            print("\nBrightness level: " + i)
+            print("\nBrightness level: " + str(i))
             time.sleep(1)
 
 if __name__ == '__main__':

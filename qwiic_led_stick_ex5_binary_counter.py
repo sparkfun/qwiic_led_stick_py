@@ -44,6 +44,11 @@ import time
 import sys
 
 def binary_LED_display(LED_stick, count, LED_length):
+    # Create color arrays because we want to turn on whole string of LEDs at one time
+    red_list = [0] * LED_length
+    green_list = [0] * LED_length
+    blue_list = [0] * LED_length
+    
     # This for loop will repeat for each pixel of the LED Stick
     for i in range(0, LED_length):
         # For ith_bit, we use the bitshift operator. count >> i takes the binary
@@ -54,14 +59,13 @@ def binary_LED_display(LED_stick, count, LED_length):
         # This will resolve to the oth bit of ith_bit
         ith_bit_true = ith_bit & 0b1
         # Write the color red to the current LED if the ith_bit_true
-        LED_stick.set_single_LED_color(10 - i, 255 * ith_bit_true, 0, 0)
+        # LED_stick.set_single_LED_color(10 - i, 255 * ith_bit_true, 0, 0)
+        red_list[LED_length - i - 1] = 255 * ith_bit_true
+    
+    LED_stick.set_all_LED_unique_color(red_list, green_list, blue_list, LED_length)
 
 def binary_serial_display(count, bit_length):
-    for i in range(bit_length, 0, -1):
-        # Start printing at MSB
-        ith_bit = count >> i - 1
-        ith_bit_true = ith_bit & 0b1
-        print(str(count) + "\t" + str(ith_bit_true))
+    print(str(count) + "\t" + str(bin(count)))
 
 def run_example():
 
@@ -73,6 +77,9 @@ def run_example():
             file=sys.stderr)
         return
     print("\nLED Stick ready!")
+    
+    # Reset the state of LEDs
+    my_stick.LED_off()
 
     while True:
         # This loop counts from 0 to 1023 and displays the binary over the 

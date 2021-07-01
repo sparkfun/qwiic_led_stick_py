@@ -56,9 +56,12 @@ def run_example():
             file=sys.stderr)
         return
     print("\nLED Stick ready!")
-
+    
     # First, turn all LEDs off
     my_stick.LED_off()
+    # Give stick time to turn all LEDs off
+    time.sleep(0.5)
+    
     # Change LED length to 5
     # This will allow you to write to a maximum of 5 LEDs
     my_stick.change_length(5)

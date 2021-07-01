@@ -196,7 +196,6 @@ class QwiicLEDStick(object):
         data_list = [red, green, blue]
         return self._i2c.writeBlock(self.address, self.COMMAND_WRITE_ALL_LED_COLOR, data_list)
     
-    # TODO: finish this function!
     # ------------------------------------------------------------------------------
     # set_all_LED_unique_color(red_list, blue_list, green_list, length)
     #
@@ -323,15 +322,17 @@ class QwiicLEDStick(object):
             Change the I2C address from one address to another.
 
             :param new_address: the new address to be set to. Must be valid.
-            :return: true if the command was sent successfully, return false if 
-                the new address is invalid
-            :rtype: bool
+            :return: Nothing
+            :rtype: Void
         """
         # First, check if the specified address is valid
         if new_address < 0x08 or new_address > 0x77:
             return False
         
-        return self._i2c.writeByte(self.address, self.COMMAND_CHANGE_ADDRESS, new_address)
+        self._i2c.writeByte(self.address, self.COMMAND_CHANGE_ADDRESS, new_address)
+        
+        # Update address variable
+        self.address = new_address
     
     # --------------------------------------------------------------------------
     # change_length(new_length)

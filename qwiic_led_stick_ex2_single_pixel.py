@@ -51,7 +51,7 @@ def run_example():
         print("\nThe Qwiic LED Stick isn't connected to the system. Please check your connection", \
             file=sys.stderr)
         return
-    print("\nButton ready!")
+    print("\nLED Stick ready!")
 
     while True:
 
@@ -64,7 +64,7 @@ def run_example():
         # Turn all LEDs off
         my_stick.LED_off()
         # Turn on LED #6, red
-        my_stick.set_single_LED_color(4, 255, 0, 0)
+        my_stick.set_single_LED_color(6, 255, 0, 0)
         time.sleep(1)
 
 if __name__ == '__main__':

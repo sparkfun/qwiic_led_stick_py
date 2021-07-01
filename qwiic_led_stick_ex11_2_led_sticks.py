@@ -45,8 +45,8 @@ import sys
 def run_example():
 
     print("\nSparkFun Qwiic LED Stick Example 11")
-    my_stick1.qwiic_led_stick.QwiicLEDStick()
-    my_stick2.qwiic_led_stick.QwiicLEDStick(0x29)
+    my_stick1 = qwiic_led_stick.QwiicLEDStick()
+    my_stick2 = qwiic_led_stick.QwiicLEDStick(0x29)
 
     if my_stick1.begin() == False:
         print("\nThe Qwiic LED Stick 1 isn't connected to the system. Please check your connection", \
@@ -54,7 +54,7 @@ def run_example():
         return
     print("\nLED Stick 1 ready!")
 
-    if my_stick2.begint() == False:
+    if my_stick2.begin() == False:
         print("\nThe Qwiic LED Stick 2 isn't connected to the system. Please check your connection", \
             file=sys.stderr)
         return

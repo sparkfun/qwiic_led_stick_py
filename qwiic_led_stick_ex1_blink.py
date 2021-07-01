@@ -52,6 +52,8 @@ def run_example():
             file=sys.stderr)
         return
     print("\nLED Stick ready!")
+    
+    my_stick.set_all_LED_brightness(15)
 
     while True:
         
