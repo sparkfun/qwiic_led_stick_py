@@ -1,5 +1,5 @@
 API Reference
 ==============
 
-.. autoclass:: QwiicLEDStick
+.. automodule:: qwiic_led_stick
    :members:
