@@ -37,7 +37,6 @@
 #==================================================================================
 # Example 2
 
-from __future__ import print_function
 import qwiic_led_stick
 import time
 import sys
@@ -57,7 +56,6 @@ def run_example():
 
         # Turn all LEDs off
         my_stick.LED_off()
-        # TODO: make sure this numbering matches up with the silkscreen
         # Turn on LED #4, red
         my_stick.set_single_LED_color(4, 255, 0, 0)
         time.sleep(1)

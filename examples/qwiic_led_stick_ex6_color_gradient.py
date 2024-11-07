@@ -38,7 +38,6 @@
 #==================================================================================
 # Example 6
 
-from __future__ import print_function
 import qwiic_led_stick
 import time
 import sys

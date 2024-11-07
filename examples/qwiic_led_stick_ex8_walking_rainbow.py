@@ -37,7 +37,6 @@
 #==================================================================================
 # Example 8
 
-from __future__ import print_function
 import qwiic_led_stick
 import math
 import time
@@ -95,7 +94,7 @@ def walking_rainbow(LED_stick, rainbow_length, LED_length, delay):
 
 def run_example():
 
-    print("\nSparkFun Qwiic LED Stick Example 1")
+    print("\nSparkFun Qwiic LED Stick Example 8")
     my_stick = qwiic_led_stick.QwiicLEDStick()
 
     if my_stick.begin() == False:

@@ -39,15 +39,16 @@
 #==================================================================================
 # Example 10
 
-from __future__ import print_function
 import qwiic_led_stick
 import time
 import sys
 
 def run_example():
+    # Change this to whatever the i2c address currently is
+    old_address = qwiic_led_stick._QWIIC_LED_STICK_DEFAULT_ADDRESS
 
     print("\nSparkFun Qwiic LED Stick Example 10")
-    my_stick = qwiic_led_stick.QwiicLEDStick()
+    my_stick = qwiic_led_stick.QwiicLEDStick(old_address)
 
     if my_stick.begin() == False:
         print("\nThe Qwiic LED Stick isn't connected to the system. Please check your connection", \
@@ -59,7 +60,7 @@ def run_example():
     print("\nDon't use the 0x prefix. For instance, if you wanted to")
     print("\nchange the address to 0x5B, you would type 5B and hit enter.")
 
-    new_address = raw_input("\nNew address: ")
+    new_address = input("\nNew address: ")
     new_address = int(new_address, 16)
 
     # Check if the user entered a valid address

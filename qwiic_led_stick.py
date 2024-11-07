@@ -160,7 +160,7 @@ class QwiicLEDStick(object):
             blue = 0
         
 
-        data = [number, red, green, blue]
+        data = [int(number), int(red), int(green), int(blue)]
         return self._i2c.writeBlock(self.address, self.COMMAND_WRITE_SINGLE_LED_COLOR, data)
 
     # ------------------------------------------------------------------------------
@@ -193,7 +193,7 @@ class QwiicLEDStick(object):
             blue = 0
         
 
-        data_list = [red, green, blue]
+        data_list = [int(red), int(green), int(blue)]
         return self._i2c.writeBlock(self.address, self.COMMAND_WRITE_ALL_LED_COLOR, data_list)
     
     # ------------------------------------------------------------------------------
@@ -276,7 +276,7 @@ class QwiicLEDStick(object):
         if brightness < 0:
             brightness = 0
         
-        data = [number, brightness]
+        data = [int(number), int(brightness)]
         return self._i2c.writeBlock(self.address, self.COMMAND_WRITE_SINGLE_LED_BRIGHTNESS, data)
     
     # ----------------------------------------------------------------------------
@@ -298,7 +298,7 @@ class QwiicLEDStick(object):
         if brightness < 0:
             brightness = 0
         
-        return self._i2c.writeByte(self.address, self.COMMAND_WRITE_ALL_LED_BRIGHTNESS, brightness)
+        return self._i2c.writeByte(self.address, self.COMMAND_WRITE_ALL_LED_BRIGHTNESS, int(brightness))
     
     # ---------------------------------------------------------------------------
     # led_off()
