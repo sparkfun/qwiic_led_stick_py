@@ -1,6 +1,0 @@
-
-Example Eleven - 2 LED Sticks
------------------------------------
-.. literalinclude:: ../examples/qwiic_led_stick_ex11_2_led_sticks.py
-    :caption: examples/qwiic_led_stick_ex11_2_led_sticks.py
-    :linenos:

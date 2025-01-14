@@ -36,7 +36,7 @@
 # SOFTWARE.
 #==================================================================================
 
-"""
+"""!
 qwiic_led_stick
 ===============
 Python module for the SparkFun Qwiic LED Stick - APA102C.
@@ -62,15 +62,15 @@ _AVAILABLE_I2C_ADDRESS = [_QWIIC_LED_STICK_DEFAULT_ADDRESS] # Initialize with de
 _AVAILABLE_I2C_ADDRESS.extend(_FULL_ADDRESS_LIST) # Add full range of I2C addresses
 
 class QwiicLEDStick(object):
-    """
+    """!
     QwiicLEDStick
 
-        :param address: The I2C address to use for the device.
+    @param address: The I2C address to use for the device.
                         If not provided, the default address is used.
-        :param i2c_driver: An existing i2c driver object. If not provided a 
+    @param i2c_driver: An existing i2c driver object. If not provided a 
                         a driver is created.
-        :return: The GPIO device object.
-        :rtype: Object
+
+    @return **Object** The GPIO device object.
     """
     # Constructor
     device_name = _DEFAULT_NAME
@@ -107,11 +107,10 @@ class QwiicLEDStick(object):
     #
     # Is an actual board connected to our system?
     def is_connected(self):
-        """
-            Determine if a Qwiic SGP40 device is connected to the system.
+        """!
+        Determine if a Qwiic SGP40 device is connected to the system.
 
-            :return: True if the device is connected, false otherwise.
-            :rtype: bool
+        @return **bool** True if the device is connected, false otherwise.
         """
         return qwiic_i2c.isDeviceConnected(self.address)
 
@@ -120,13 +119,12 @@ class QwiicLEDStick(object):
     #
     # Initialize the system and validate the board.
     def begin(self):
-        """
-            Initialize the operation of the Qwiic LED Stick.
+        """!
+        Initialize the operation of the Qwiic LED Stick.
             Run is_connected()
 
-            :return: Returns true if an LED Stick is connected to the system
+        @return **bool** Returns true if an LED Stick is connected to the system
                     False otherwise.
-            :rtype: bool
         """
         return self.is_connected()
     
@@ -135,15 +133,15 @@ class QwiicLEDStick(object):
     #
     # Change the color of a specific LED.
     def set_single_LED_color(self, number, red, green, blue):
-        """
-            Change the color of a specific LED.
+        """!
+        Change the color of a specific LED.
 
-            :param number: the number of LED. Indexing starts at 1.
-            :param red: the red value between 0 and 255
-            :param green: the green value between 0 and 255
-            :param blue: the blue value between 0 and 255
-            :return: Returns true if command written successfully, false otherwise
-            :rtype: bool
+        @param number: the number of LED. Indexing starts at 1.
+        @param red: the red value between 0 and 255
+        @param green: the green value between 0 and 255
+        @param blue: the blue value between 0 and 255
+
+        @return **bool** Returns true if command written successfully, false otherwise
         """
         # First, check the boundary cases
         if red > 255:
@@ -168,15 +166,15 @@ class QwiicLEDStick(object):
     #
     # Set the color of all LEDs in the string
     def set_all_LED_color(self, red, green, blue):
-        """
-            Set the color of all LEDs in the string. Each will be shining the same color.
+        """!
+        Set the color of all LEDs in the string. Each will be shining the same color.
             The color value must be between 0-255.
-            
-            :param red: the red value to set all LEDs to. Between 0 and 255.
-            :param green: the green value to set all LEDs to. Between 0 and 255.
-            :param blue: the blue value to set all the LEDs to. Between 0 and 255.
-            :return: Returns true if command is written successfully, false otherwise
-            :rtype: bool
+
+        @param red: the red value to set all LEDs to. Between 0 and 255.
+        @param green: the green value to set all LEDs to. Between 0 and 255.
+        @param blue: the blue value to set all the LEDs to. Between 0 and 255.
+
+        @return **bool** Returns true if command is written successfully, false otherwise
         """
         # First, check the boundary cases
         if red > 255:
@@ -201,16 +199,16 @@ class QwiicLEDStick(object):
     #
     # Change the color of all LEDs at once to individual values
     def set_all_LED_unique_color(self, red_list, green_list, blue_list, length):
-        """
-            Change the color of all LEDs at once to individual values.
+        """!
+        Change the color of all LEDs at once to individual values.
 
-            :param red_list: a list of red values for the LEDs. Index 0 of red_list 
+        @param red_list: a list of red values for the LEDs. Index 0 of red_list 
                 corresponds to the red value of LED 0.
-            :param blue_list: a list of blue values for the LEDs.
-            :param green_list: a list of green  values for the LEDs.
-            :param length: the length of the LED string.
-            :return: True if commands are written successfully, false otherwise
-            :rtype: bool
+        @param blue_list: a list of blue values for the LEDs.
+        @param green_list: a list of green  values for the LEDs.
+        @param length: the length of the LED string.
+
+        @return **bool** True if commands are written successfully, false otherwise
         """
         # First, check the boundary cases
         for i in range(0, length):
@@ -261,14 +259,14 @@ class QwiicLEDStick(object):
     #
     # Change the brightness of a specific LED while keeping their current color
     def set_single_LED_brightness(self, number, brightness):
-        """
-            Change the brightness of a specific LED while keeping their current color.
+        """!
+        Change the brightness of a specific LED while keeping their current color.
             To turn LEDs off but remember their previous color, set brightness to 0.
 
-            :param number: number of LED to change brightness. LEDs indexed starting at 1.
-            :param brightness: value of LED brightness between 0 and 31.
-            :return: true if the command was sent successfully, false otherwise.
-            :rtype: bool
+        @param number: number of LED to change brightness. LEDs indexed starting at 1.
+        @param brightness: value of LED brightness between 0 and 31.
+
+        @return **bool** true if the command was sent successfully, false otherwise.
         """
         # First, check the boundary cases
         if brightness > 31:
@@ -284,13 +282,13 @@ class QwiicLEDStick(object):
     #
     # Change the brightness of all LEDs while keeping their current color
     def set_all_LED_brightness(self, brightness):
-        """
-            Change the brightness of all LEDs while keeping their current color.
+        """!
+        Change the brightness of all LEDs while keeping their current color.
             To turn all LEDs off but remember their previous color, set brightness to 0
 
-            :param brightness: value of LED brightness between 0 and 31.
-            :return: true if the command was sent successfully, false otherwise.
-            :rtype: bool
+        @param brightness: value of LED brightness between 0 and 31.
+
+        @return **bool** true if the command was sent successfully, false otherwise.
         """
         # First, check the boundary cases
         if brightness > 31:
@@ -305,11 +303,10 @@ class QwiicLEDStick(object):
     #
     # Turn all LEDs off by setting color to 0
     def LED_off(self):
-        """ 
-            Turn all LEDs off by setting color to 0
+        """!
+        Turn all LEDs off by setting color to 0
 
-            :return: true if the command was sent successfully, false otherwise.
-            :rtype: bool
+        @return **bool** true if the command was sent successfully, false otherwise.
         """
         return self._i2c.writeByte(self.address, self.COMMAND_WRITE_ALL_LED_OFF, 0)
     
@@ -318,12 +315,12 @@ class QwiicLEDStick(object):
     #
     # Change the I2C address from one address to another
     def change_address(self, new_address):
-        """
-            Change the I2C address from one address to another.
+        """!
+        Change the I2C address from one address to another.
 
-            :param new_address: the new address to be set to. Must be valid.
-            :return: Nothing
-            :rtype: Void
+        @param new_address: the new address to be set to. Must be valid.
+
+        @return **Void** Nothing
         """
         # First, check if the specified address is valid
         if new_address < 0x08 or new_address > 0x77:
@@ -339,12 +336,12 @@ class QwiicLEDStick(object):
     #
     # Change the length of the LED string
     def change_length(self, new_length):
-        """
-            Change the length of the LED string
-            
-            :param new_length: the new length of the LED string
-            :return: true if the command was sent successfully, false otherwise.
-            :rtype: bool
+        """!
+        Change the length of the LED string
+
+        @param new_length: the new length of the LED string
+
+        @return **bool** true if the command was sent successfully, false otherwise.
         """
         # TODO: need to figure out the max length of the LED string
         return self._i2c.writeByte(self.address, self.COMMAND_CHANGE_LED_LENGTH, new_length)
