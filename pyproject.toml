@@ -3,7 +3,7 @@ requires = ["setuptools"]
 
 [project]
 name = "sparkfun_qwiic_led_stick"
-version = "0.0.1"
+version = "2.0.0"
 description = "Sparkfun Electronics Qwiic LED_Stick Package"
 readme = "DESCRIPTION.rst"
 
