@@ -1,6 +1,6 @@
 ![Qwiic LED_STICK - Python Package](docs/images/gh-banner.png "qwiic LED_STICK Python Package")
 
-# SparkFun Qwiic LED_STICK - Python Package
+# SparkFun Qwiic LED Stick - Python Package
 
 ![PyPi Version](https://img.shields.io/pypi/v/sparkfun_qwiic_led_stick)
 ![GitHub issues](https://img.shields.io/github/issues/sparkfun/qwiic_led_stick_py)
@@ -31,7 +31,7 @@ New to qwiic? Take a look at the entire [SparkFun qwiic ecosystem](https://www.s
 
 This Python package supports the following SparkFun qwiic products on Python, MicroPython and Circuit python. 
 
-* [SparkFun LED Stick Sensor - LED_STICK](https://www.sparkfun.com/products/18354)
+* [SparkFun Qwiic LED Stick](https://www.sparkfun.com/products/18354)
 
 ### Supported Platforms
 
